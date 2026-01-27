@@ -1,19 +1,22 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-dt = 0.1
-total_time = 100
+dt = 0.05
+total_time = 240  # 10 days so you can see entrainment
 
-v_0 = 0.1
-p_crit = 0.1
-alpha_p = 1
-beta_c = 1
-beta_p = 1
-gamma = 1
-n = 2
+v_0 = 1.0
+p_crit = 0.3
+alpha_p = 0.6
 
-p_0 = 0.1
+beta_c = 0.03   # ~23 h half-life (slow activator-like)
+beta_p = 0.40   # ~1.7 h half-life (PER2-like order)
+
+gamma = 0.4     # light strength into C
+n = 4           # stronger nonlinearity helps (n=2 often too soft)
+
+p_0 = 0.2
 c_0 = 0.2
+
 
 def light(t):
     # 1 for first 12 hours of each 24h cycle, else 0
