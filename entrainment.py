@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 dt = 0.05
-total_time = 240  # 10 days so you can see entrainment
+total_time = 72  # 10 days so you can see entrainment
 
 v_0 = 1.0
 p_crit = 0.3
