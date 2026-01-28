@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 # Simulation parameters
 # -------------------------------
 dt = 0.01
-total_time = 1000  # hours
+total_time = 400  # hours
 t = np.arange(0, total_time + dt, dt)
 
 # -------------------------------
@@ -38,7 +38,7 @@ beta6 = 0.01 * alpha1   # VERY slow mitochondrial degradation
 k = 1.5
 n = 8
 
-gamma = 0.02  # light forcing
+gamma = 0.001  # light forcing
 
 # -------------------------------
 # Initial conditions
@@ -66,15 +66,18 @@ print()
 # -------------------------------
 # No light
 # -------------------------------
-def L(t):
-    return 1.0 if t%24 <12 else 0.0
+def L(t, switch_on_time):
+    if t%24 <12 or t<switch_on_time:
+        return 0.0
+    else:
+        return 1
 
 # -------------------------------
 # Derivatives
 # -------------------------------
-def deriv(state, t):
+def deriv(state, t, switch_on_time):
     x, y1, z1, y2, z2, m = state
-    Lt = L(t)
+    Lt = L(t, switch_on_time)
 
     dxdt  = alpha1 * (k**n / (k**n + z1**n)) - beta1 * x + gamma * Lt
     dy1dt = alpha2 * x - beta2 * y1
@@ -92,7 +95,7 @@ state = np.zeros((len(t), 6))
 state[0] = np.array([x0, y10, z10, y20, z20, m0])
 
 for i in range(len(t) - 1):
-    state[i+1] = state[i] + dt * deriv(state[i], t[i])
+    state[i+1] = state[i] + dt * deriv(state[i], t[i], switch_on_time=total_time/2)
     state[i+1] = np.maximum(state[i+1], 0.0)
 
 # Unpack
