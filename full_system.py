@@ -28,7 +28,7 @@ beta6 = -np.log(0.90) / 24  # 10% degradation per day ≈ 0.00439 hr⁻¹
 k = 1.5
 n = 10
 
-gamma = 0.0  # NO LIGHT
+gamma = 1.0  # NO LIGHT
 
 # -------------------------------
 # Initial conditions
@@ -50,7 +50,7 @@ print()
 # No light
 # -------------------------------
 def L(t):
-    return 0.0
+    return 0.0 if t%24 < 12 else 1.0
 
 # -------------------------------
 # Derivatives
